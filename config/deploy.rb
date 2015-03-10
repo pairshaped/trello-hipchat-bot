@@ -4,9 +4,11 @@ require 'mina/git'
 require 'mina/rvm'
 require 'mina/foreman'
 
+set :application, 'trello-hipchat-bot'
 set :domain, 'dave.pairshaped.ca'
-set :deploy_to, '/var/www/trello-hipchat-bot'
-set :repository, 'git@github.com:pairshaped/trello-hipchat-bot.git'
+set :deploy_to, "/var/www/#{application}"
+set :repository, "git@github.com:pairshaped/#{application}.git"
+
 set :branch, 'master'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
