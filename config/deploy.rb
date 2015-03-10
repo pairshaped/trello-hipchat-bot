@@ -1,8 +1,6 @@
 require 'mina/bundler'
-require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'
-require 'mina/foreman'
 
 set :application, 'trello-hipchat-bot'
 set :domain, 'dave.pairshaped.ca'
@@ -13,7 +11,7 @@ set :branch, 'master'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['.env', 'log']
+set :shared_paths, ['log', '.env']
 
 set :user, 'deploy'
 set :forward_agent, true
@@ -28,6 +26,7 @@ task :environment do
   # For those using RVM, use this to load an RVM version@gemset.
   invoke :'rvm:use[ruby-2.0.0-p598@trello-hipchat-bot]'
 end
+
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
 # For Rails apps, we'll make some of the shared paths that are shared between
@@ -49,10 +48,9 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'deploy:cleanup'
-    invoke :'foreman:export'
 
-    to :launch do
-      invoke :'foreman:restart'
-    end
+    # to :launch do
+    #   queue 'foreman restart'
+    # end
   end
 end
