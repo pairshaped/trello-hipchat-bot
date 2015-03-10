@@ -47,5 +47,10 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'deploy:cleanup'
+    invoke :'foreman:export'
+
+    to :launch do
+      invoke :'foreman:restart'
+    end
   end
 end
