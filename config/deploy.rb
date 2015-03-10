@@ -4,7 +4,7 @@ require 'mina/git'
 require 'mina/rvm'
 require 'mina/foreman'
 
-set :domain, 'pairshaped.ca'
+set :domain, 'dave.pairshaped.ca'
 set :deploy_to, '/var/www/trello-hipchat-bot'
 set :repository, 'git@github.com:pairshaped/trello-hipchat-bot.git'
 set :branch, 'master'
@@ -24,7 +24,7 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  # invoke :'rvm:use[ruby-1.9.3-p125@default]'
+  invoke :'rvm:use[ruby-2.0.0-p598@trello-hipchat-bot]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
