@@ -32,7 +32,7 @@ def run
 
   scheduler = Rufus::Scheduler.new
 
-  scheduler.every '5s' do
+  scheduler.every '15s' do
     p "Querying Trello at #{Time.now.to_s}"
     boards.each do |board_with_room|
       board = board_with_room.first
@@ -40,6 +40,7 @@ def run
       last_timestamp = timestamps[board.id]
       actions = board.actions(:filter => :all, :since => last_timestamp.iso8601)
       actions.each do |action|
+        next unless action && action.date && action.data && action.data['board'] && action.data['card']
         if last_timestamp < action.date
           board_link = "<a href='https://trello.com/board/#{action.data['board']['id']}'>#{action.data['board']['name']}</a>"
           card_link = "#{board_link} : <a href='https://trello.com/card/#{action.data['board']['id']}/#{action.data['card']['idShort']}'>#{action.data['card']['name']}</a>"
